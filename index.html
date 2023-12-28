@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Random Password Generator</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <main id="main">
+            <h1>Random Password Generator</h1>
+            <span class="generatedPassword"></span>
+            <div class="inputs">
+                <input type="checkbox" name="useSymbols" id="useSymbols" />
+                <label for="useSymbols">Include Symbols</label>
+
+                <input type="checkbox" name="useUppercase" id="useUppercase" />
+                <label for="useUppercase">Include Uppercase</label>
+            </div>
+            <label for="passwordLength">Length of Password</label>
+            <input type="number" name="passwordLength" id="passwordLength" min="10" value="10" />
+            <button>GENERATE PASSWORD</button>
+        </main>
+
+        <script>
+            const lettersLower = "abcdefghijklmnopqrstuvwxyz";
+            const lettersUpper = lettersLower.toUpperCase();
+            const numbers = "0123456789";
+            const symbols = "!@#$%^&*()_+";
+            const generatedPassword = document.querySelector(".generatedPassword");
+
+            const randomPassword = () => {
+                let password = "";
+                let passwordLength = document.getElementById("passwordLength").value;
+                let passwordCharacters = lettersLower;
+
+                if (document.getElementById("useSymbols").checked) {
+                    passwordCharacters += symbols;
+                }
+
+                if (document.getElementById("useUppercase").checked) {
+                    passwordCharacters += lettersUpper;
+                }
+
+                for (let i = 0; i < passwordLength; i++) {
+                    password += passwordCharacters.charAt(
+                        Math.floor(Math.random() * passwordCharacters.length)
+                    );
+                }
+
+                return password;
+            };
+
+            document.querySelector("button").addEventListener("click", () => {
+                if (document.getElementById("passwordLength").value === "") {
+                    alert("Please enter a password length");
+                    return;
+                }
+
+                if (document.getElementById("passwordLength").value < 10) {
+                    alert("Password must be at least 10 characters long");
+                    return;
+                }
+
+                generatedPassword.textContent = randomPassword();
+            });
+        </script>
+    </body>
+</html>
