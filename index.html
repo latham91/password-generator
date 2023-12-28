@@ -16,9 +16,12 @@
 
                 <input type="checkbox" name="useUppercase" id="useUppercase" />
                 <label for="useUppercase">Include Uppercase</label>
+
+                <input type="checkbox" name="useNumbers" id="useNumbers" />
+                <label for="useNumbers">Include Numbers</label>
             </div>
             <label for="passwordLength">Length of Password</label>
-            <input type="number" name="passwordLength" id="passwordLength" min="10" value="10" />
+            <input type="number" name="passwordLength" id="passwordLength" min="10" max="35" value="10" />
             <button>GENERATE PASSWORD</button>
         </main>
 
@@ -42,6 +45,10 @@
                     passwordCharacters += lettersUpper;
                 }
 
+                if (document.getElementById("useNumbers").checked) {
+                    passwordCharacters += numbers;
+                }
+
                 for (let i = 0; i < passwordLength; i++) {
                     password += passwordCharacters.charAt(
                         Math.floor(Math.random() * passwordCharacters.length)
@@ -59,6 +66,11 @@
 
                 if (document.getElementById("passwordLength").value < 10) {
                     alert("Password must be at least 10 characters long");
+                    return;
+                }
+
+                if (document.getElementById("passwordLength").value > 35) {
+                    alert("Password cannot exceed 35 character limit");
                     return;
                 }
 
